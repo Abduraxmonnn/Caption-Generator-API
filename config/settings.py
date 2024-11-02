@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -8,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-skb_7-83122d2t*)06d!kcw%3p5!wofr-@15%zs%1293dep8u9w8@(k2'
+SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -18,6 +19,7 @@ IS_DEV_DB = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost"]
 
 # Application definition
 
@@ -28,6 +30,10 @@ THIRD_APPS = [
 ]
 
 INSTALLED_APPS = [
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,10 +49,12 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -132,3 +140,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# EMAIL SERVER SETTINGS
+EMAIL_BACKEND = str(os.environ.get('EMAIL_BACKEND'))
+EMAIL_HOST = str(os.environ.get('EMAIL_HOST'))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_PORT = str(os.environ.get('EMAIL_PORT'))
+EMAIL_FROM = str(os.environ.get('EMAIL_FROM'))
+EMAIL_HOST_USER = str(os.environ.get('EMAIL_HOST_USER'))
+EMAIL_HOST_PASSWORD = str(os.environ.get('EMAIL_HOST_PASSWORD'))
+
+# ALLAUTH SETTINGS
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
