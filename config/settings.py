@@ -1,5 +1,8 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -161,3 +164,15 @@ AUTHENTICATION_BACKENDS = [
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
+
+# AWS SETTINGS
+AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_REGION_NAME = os.getenv('AWS_REGION_NAME')
+S3_BUCKET = os.getenv('S3_BUCKET')
+S3_TRANSCRIBE_OUTPUT_BUCKET = os.getenv('S3_TRANSCRIBE_OUTPUT_BUCKET')
+S3_TRANSLATE_OUTPUT_BUCKET = os.getenv('S3_TRANSLATE_OUTPUT_BUCKET')
+DATA_ACCESS_ROLE = os.getenv('DATA_ACCESS_ROLE')
+
+# ASSEMBLY AI SETTINGS
+ASSEMBLYAI_KEY = os.getenv('ASSEMBLYAI_KEY')

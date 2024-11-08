@@ -13,6 +13,10 @@ pillow = "^11.0.0"
 django-filter = "^24.3"
 drf-yasg = "^1.21.8"
 django-allauth = "^65.1.0"
+boto3 = "^1.35.54"
+requests = "^2.32.3"
+assemblyai = "^0.35.0"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
